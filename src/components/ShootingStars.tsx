@@ -53,12 +53,15 @@ function ShootingStar({ onComplete }: { onComplete: () => void }) {
     )
 }
 
-export function ShootingStars() {
+export function ShootingStars({ isFreeRoam = false }: { isFreeRoam?: boolean }) {
     const [stars, setStars] = useState<{ id: number }[]>([])
 
     useFrame((_state) => {
-        // Occasional spawn (1% chance per frame, max 3 stars)
-        if (stars.length < 3 && Math.random() < 0.01) {
+        // Higher chance in free roam
+        const spawnChance = isFreeRoam ? 0.1 : 0.01
+        const maxStars = isFreeRoam ? 10 : 3
+
+        if (stars.length < maxStars && Math.random() < spawnChance) {
             setStars(prev => [...prev, { id: Date.now() + Math.random() }])
         }
     })

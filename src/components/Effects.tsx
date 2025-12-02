@@ -1,7 +1,7 @@
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
+import { EffectComposer, Bloom, Vignette, ChromaticAberration } from '@react-three/postprocessing'
+import { Vector2 } from 'three'
 
-
-export function Effects({ glitch = false }: { glitch?: boolean }) {
+export function Effects({ glitch = false, turbo = false }: { glitch?: boolean, turbo?: boolean }) {
     return (
         <EffectComposer>
             <Bloom
@@ -11,7 +11,13 @@ export function Effects({ glitch = false }: { glitch?: boolean }) {
                 radius={0.5}
             />
             <Vignette eskil={false} offset={0.1} darkness={1.1} />
-            {/* Add more glitch effects here if desired */}
+
+            {/* Turbo Speed Effect */}
+            <ChromaticAberration
+                offset={turbo ? new Vector2(0.01, 0.002) : new Vector2(0, 0)}
+                radialModulation={true}
+                modulationOffset={0.5}
+            />
         </EffectComposer>
     )
 }
