@@ -3,7 +3,7 @@ import { SectionCard } from './SectionCard'
 
 export function SecretLevel({ onMessageOpen }: { onMessageOpen: () => void }) {
     return (
-        <group position={[0, -50, 0]}>
+        <group position={[0, -52, 0]}>
             {/* Spotlight for dramatic effect */}
             <spotLight
                 position={[0, 10, 5]}

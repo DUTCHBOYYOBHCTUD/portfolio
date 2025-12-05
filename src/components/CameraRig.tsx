@@ -24,7 +24,7 @@ export function CameraRig({ activeCard, transitionPhase, secretMode }: { activeC
             // Target position: In front of the expanded card
             // If secretMode, we are deep down at -50.
             const baseY = secretMode ? -48.5 : 1.5
-            const baseLookAtY = secretMode ? -50 : 1.5
+            const baseLookAtY = secretMode ? -48.5 : 1.5
 
             const targetPos = new THREE.Vector3(0, baseY, 17)
             const targetLookAt = new THREE.Vector3(0, baseLookAtY, 9)

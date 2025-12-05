@@ -15,10 +15,18 @@ export function ExpandedCard({ data, onClose, phase: _phase, position = [0, 1.5,
     // Calculate max scroll dynamically based on real rendered height or fallback
     // Visible height is approx 6 units.
     const maxScroll = useMemo(() => {
-        // Fallback calculation based on line count (approx 0.3 units per line)
-        const estimatedHeight = fullText.split('\n').length * 0.3;
+        // Fallback calculation:
+        // 1. Count explicit newlines
+        // 2. Estimate wrapping (approx 50 chars per line for width 8 and fontSize 0.25)
+        const explicitLines = fullText.split('\n').length;
+        const estimatedWrappedLines = fullText.length / 50;
+        const totalEstimatedLines = Math.max(explicitLines, estimatedWrappedLines);
+
+        const estimatedHeight = totalEstimatedLines * 0.35; // Slightly generous line height
         const realHeight = contentHeight > 0 ? contentHeight : estimatedHeight;
-        return Math.max(0, realHeight - 6 + 1);
+
+        // Add extra padding (+3) to ensure we can scroll past the end
+        return Math.max(0, realHeight - 6 + 3);
     }, [contentHeight, fullText]);
 
     // CRT Animation Logic
