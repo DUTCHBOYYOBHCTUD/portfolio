@@ -12,14 +12,15 @@ interface CarouselProps {
 }
 
 const ITEMS = [
-    { type: 'card', title: 'PROJECTS', desc: 'View my work', color: '#594d00', glowColor: '#FFD700', icon: 'project' },
-    { type: 'card', title: 'EXPERIENCE', desc: 'My journey', color: '#2c3e50', glowColor: '#00FFFF', icon: 'experience' },
-    { type: 'card', title: 'SKILLS', desc: 'Technical Arsenal', color: '#1a4a1c', glowColor: '#00FF00', icon: 'skills' },
-    { type: 'card', title: 'EDUCATION', desc: 'Academic Log', color: '#4a1a4a', glowColor: '#FF44FF', icon: 'education' },
-    { type: 'card', title: 'CONTACT', desc: 'Get in touch', color: '#4a1a1c', glowColor: '#FF00FF', icon: 'contact' }
+    { type: 'card', title: 'PROJECTS', desc: 'View my work', color: '#594d00', glowColor: '#FFD700', icon: 'project' }, // Gold
+    { type: 'card', title: 'EXPERIENCE', desc: 'My journey', color: '#2c3e50', glowColor: '#00FFFF', icon: 'experience' }, // Cyan
+    { type: 'card', title: 'SKILLS', desc: 'Technical Arsenal', color: '#1a4a1c', glowColor: '#00FF00', icon: 'skills' }, // Green
+    { type: 'card', title: 'EDUCATION', desc: 'Academic Log', color: '#4a1a4a', glowColor: '#9932CC', icon: 'education' }, // Purple
+    { type: 'card', title: 'CONTACT', desc: 'Get in touch', color: '#4a1a1c', glowColor: '#FF00FF', icon: 'contact' } // Magenta
 ]
 
 export function Carousel({ onCardClick, position = [0, 0, 0], expandedCard }: CarouselProps) {
+    // const { width } = useThree((state) => state.viewport)
     const scroll = useScroll()
     const groupRef = useRef<THREE.Group>(null!)
 
@@ -33,8 +34,9 @@ export function Carousel({ onCardClick, position = [0, 0, 0], expandedCard }: Ca
             groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetRotation, delta * 5)
         }
 
-        // Position: "Pops up" from below and stays at 0 (Centered)
-        const targetY = THREE.MathUtils.lerp(-15, 0, Math.min(offset * 4, 1))
+        // Position: "Pops up" from below and stays at 1.5 (Lowered further)
+        // Starts at -15, moves to 1.5
+        const targetY = THREE.MathUtils.lerp(-15, 1.5, Math.min(offset * 4, 1))
         groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, targetY, delta * 5)
     })
 
@@ -42,7 +44,7 @@ export function Carousel({ onCardClick, position = [0, 0, 0], expandedCard }: Ca
         <group ref={groupRef} position={position}>
             {ITEMS.map((item, index) => {
                 const angle = (index / ITEMS.length) * Math.PI * 2
-                const radius = 6
+                const radius = 6 // Distance from center
                 const x = Math.sin(angle) * radius
                 const z = Math.cos(angle) * radius
 
@@ -61,7 +63,7 @@ export function Carousel({ onCardClick, position = [0, 0, 0], expandedCard }: Ca
                                 title={item.title}
                                 description={item.desc}
                                 color={item.color}
-                                glowColor={item.glowColor}
+                                glowColor={item.glowColor} // Pass the glow color
                                 position={[0, 0, 0]}
                                 iconType={item.icon as any}
                                 onClick={(worldPos, worldRot) => {

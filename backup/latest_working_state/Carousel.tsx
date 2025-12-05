@@ -15,7 +15,7 @@ const ITEMS = [
     { type: 'card', title: 'PROJECTS', desc: 'View my work', color: '#594d00', glowColor: '#FFD700', icon: 'project' },
     { type: 'card', title: 'EXPERIENCE', desc: 'My journey', color: '#2c3e50', glowColor: '#00FFFF', icon: 'experience' },
     { type: 'card', title: 'SKILLS', desc: 'Technical Arsenal', color: '#1a4a1c', glowColor: '#00FF00', icon: 'skills' },
-    { type: 'card', title: 'EDUCATION', desc: 'Academic Log', color: '#4a1a4a', glowColor: '#FF44FF', icon: 'education' },
+    { type: 'card', title: 'EDUCATION', desc: 'Academic Log', color: '#4a1a4a', glowColor: '#9932CC', icon: 'education' },
     { type: 'card', title: 'CONTACT', desc: 'Get in touch', color: '#4a1a1c', glowColor: '#FF00FF', icon: 'contact' }
 ]
 

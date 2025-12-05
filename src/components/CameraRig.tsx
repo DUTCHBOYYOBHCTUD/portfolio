@@ -24,7 +24,7 @@ export function CameraRig({ activeCard }: { activeCard?: any }) {
 
             // Target position: In front of the expanded card (which is at 0, 1.5, 9)
             // Camera should be slightly back and up
-            const targetPos = new THREE.Vector3(0, 1.5, 14)
+            const targetPos = new THREE.Vector3(0, 1.5, 17)
             const targetLookAt = new THREE.Vector3(0, 1.5, 9)
 
             // Lerp camera
@@ -76,11 +76,11 @@ export function CameraRig({ activeCard }: { activeCard?: any }) {
             <OrbitControls
                 ref={controlsRef}
                 target={[0, 1.5, 9]} // Look at the card
-                enableZoom={true}
+                enableZoom={false}
                 enablePan={true}
                 enableRotate={true}
-                minDistance={2}
-                maxDistance={20}
+                minDistance={8}
+                maxDistance={8}
                 makeDefault // Important to take over control
             />
         )

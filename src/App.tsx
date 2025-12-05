@@ -78,7 +78,7 @@ function App() {
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} color="#ffffff" />
           <pointLight position={[-10, -10, -10]} intensity={0.5} color="#ffffff" />
 
-          <ScrollControls pages={4.5} damping={0.25}>
+          <ScrollControls pages={4.5} damping={0.25} enabled={!expandedCard}>
             <AbstractBackground />
             <ShootingStars isFreeRoam={isFreeRoam} />
             <Fireworks />

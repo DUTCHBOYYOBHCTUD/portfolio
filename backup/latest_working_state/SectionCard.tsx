@@ -2,7 +2,6 @@ import { useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Text, Edges } from '@react-three/drei'
 import * as THREE from 'three'
-import { CardIcon } from './CardIcon'
 
 interface ComputerCardProps {
     title: string
@@ -14,9 +13,15 @@ interface ComputerCardProps {
     onClick: (worldPos: THREE.Vector3, worldRot: THREE.Euler) => void
 }
 
+const ICONS = {
+    project: '{ }',
+    experience: '^_^',
+    skills: 'EXP',
+    education: 'EDU',
+    contact: '@'
+}
 
-
-export function SectionCard({ title, description, glowColor, position, iconType, onClick }: ComputerCardProps) {
+export function SectionCard({ title, description, color, glowColor, position, iconType, onClick }: ComputerCardProps) {
     const group = useRef<THREE.Group>(null!)
     const [hovered, setHovered] = useState(false)
 
@@ -68,17 +73,21 @@ export function SectionCard({ title, description, glowColor, position, iconType,
 
                 {/* Screen Content (Title & Icon) */}
                 <group position={[0, 0, 0.07]}>
-                    {/* Icon */}
-                    <group position={[0, 0.15, 0]}>
-                        <CardIcon type={iconType} color={glowColor} />
-                    </group>
+                    <Text
+                        position={[0, 0.15, 0]}
+                        fontSize={0.2}
+                        color={glowColor}
+                        anchorX="center"
+                        anchorY="middle"
+                    >
+                        {ICONS[iconType] || '?'}
+                    </Text>
                     <Text
                         position={[0, -0.1, 0]}
                         fontSize={0.1}
-                        color={glowColor} // Use glowColor for bloom
+                        color={color}
                         anchorX="center"
                         anchorY="middle"
-                        material-toneMapped={false} // Enable bloom
                     >
                         {title}
                     </Text>
