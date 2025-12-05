@@ -46,10 +46,10 @@ const COMMANDS: Record<string, string> = {
     contact: "email: chris@example.com | github: @chris-kuriakose",
     "sudo rm -rf /": "PERMISSION DENIED. Nice try, hacker.",
     ls: "projects/  skills/  secrets.txt",
-    "cat secrets.txt": "The cake is a lie.",
+    "cat secrets.txt": "I have no voice, yet I speak to all. I am the ghost in the machine. What am I?",
 }
 
-export function FloatingTerminal({ position }: { position: [number, number, number] }) {
+export function FloatingTerminal({ position, isFreeRoam, onSecretUnlock }: { position: [number, number, number]; isFreeRoam: boolean; onSecretUnlock?: () => void }) {
     const [lines, setLines] = useState<string[]>([])
     const [bioText, setBioText] = useState('')
     const [phase, setPhase] = useState<'boot' | 'bio' | 'cat' | 'interactive'>('boot')
@@ -123,27 +123,35 @@ export function FloatingTerminal({ position }: { position: [number, number, numb
 
     // Interactive Mode (Keyboard)
     useEffect(() => {
-        if (phase !== 'interactive') return
+        if (phase !== 'interactive' || isFreeRoam) return;
 
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Enter') {
-                const cmd = input.trim().toLowerCase()
-                const output = COMMANDS[cmd] || `Command not found: ${cmd}`
+                const cmd = input.trim().toLowerCase();
 
-                setHistory(prev => [...prev, `root@kali:~$ ${input}`, output])
-                setInput('')
+                if (cmd === 'code') {
+                    setHistory(prev => [...prev, `root@kali:~$ ${input}`, "ACCESS GRANTED. INITIATING DROP SEQUENCE..."])
+                    setInput('')
+                    setTimeout(() => onSecretUnlock?.(), 1000)
+                    return
+                }
 
-                if (cmd === 'clear') setHistory([])
+                const output = COMMANDS[cmd] || `Command not found: ${cmd}`;
+
+                setHistory(prev => [...prev, `root@kali:~$ ${input}`, output]);
+                setInput('');
+
+                if (cmd === 'clear') setHistory([]);
             } else if (e.key === 'Backspace') {
-                setInput(prev => prev.slice(0, -1))
+                setInput(prev => prev.slice(0, -1));
             } else if (e.key.length === 1) {
-                setInput(prev => prev + e.key)
+                setInput(prev => prev + e.key);
             }
-        }
+        };
 
-        window.addEventListener('keydown', handleKeyDown)
-        return () => window.removeEventListener('keydown', handleKeyDown)
-    }, [phase, input])
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [phase, input, isFreeRoam, onSecretUnlock]);
 
     useFrame((state) => {
         // Subtle floating animation

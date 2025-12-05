@@ -1,21 +1,56 @@
 import { Canvas } from '@react-three/fiber'
-import { ScrollControls, Scroll, FlyControls, Environment } from '@react-three/drei'
+import { ScrollControls, Scroll, FlyControls, Environment, PerformanceMonitor } from '@react-three/drei'
 import { Suspense, useState, useEffect } from 'react'
 import { CyberText3D } from './components/CyberText3D'
 import { AbstractBackground } from './components/AbstractBackground'
 import { CameraRig } from './components/CameraRig'
 import { Carousel } from './components/Carousel'
 import { FloatingTerminal } from './components/FloatingTerminal'
+
 import { ExpandedCard } from './components/ExpandedCard'
 import { Effects } from './components/Effects'
 import { HackerRoom } from './components/HackerRoom'
 import { Fireworks } from './components/Fireworks'
 import { InfiniteStars } from './components/InfiniteStars'
 import { ShootingStars } from './components/ShootingStars'
+import { SectorWarning } from './components/SectorWarning'
+import { ScreenTransition } from './components/ScreenTransition'
+import { SecretLevel } from './components/SecretLevel'
+
+
+
 
 
 function App() {
   const [expandedCard, setExpandedCard] = useState<any>(null)
+  const [transitionPhase, setTransitionPhase] = useState<'idle' | 'entering' | 'active' | 'exiting'>('idle')
+  const [secretMode, setSecretMode] = useState(false)
+  const [dpr, setDpr] = useState(1.5)
+
+  const handleSecretUnlock = () => {
+    setSecretMode(true)
+  }
+
+  const handleCardClick = (data: any) => {
+    setExpandedCard(data)
+    setTransitionPhase('entering')
+    // Wait for entry animation
+    setTimeout(() => setTransitionPhase('active'), 800)
+  }
+
+  const handleClose = () => {
+    setTransitionPhase('exiting')
+    // Wait for exit animation before removing card
+    setTimeout(() => {
+      setExpandedCard(null)
+      setTransitionPhase('idle')
+
+      // If we are closing the secret card, return to surface
+      if (expandedCard?.title === 'TRIBUTE') {
+        setSecretMode(false)
+      }
+    }, 800)
+  }
   const [isFreeRoam, setIsFreeRoam] = useState(false)
   const [turbo, setTurbo] = useState(false)
 
@@ -63,14 +98,22 @@ function App() {
             </div>
           </div>
         )}
+
+        {/* Scroll Blocker (When Card is Expanded) */}
+        {expandedCard && (
+          // We can keep a simple blocker for background interaction if needed, 
+          // but for now let's rely on the 3D card blocking raycasts.
+          <div className="fixed inset-0 z-10" onWheel={(e) => e.stopPropagation()} />
+        )}
       </div>
 
       <Canvas
         camera={{ position: [0, 0, 12], fov: 55 }}
         style={{ width: '100%', height: '100vh' }}
-        dpr={[1, 1.5]}
+        dpr={dpr}
         performance={{ min: 0.5 }}
       >
+        <PerformanceMonitor onIncline={() => setDpr(2)} onDecline={() => setDpr(1)} />
         <Suspense fallback={null}>
           <fog attach="fog" args={['#000000', 5, 30]} />
 
@@ -115,30 +158,47 @@ function App() {
                 letterSpacing={0.9}
               />
 
-              <FloatingTerminal position={[0, -3.5, 0]} />
+              <FloatingTerminal position={[0, -4, 0]} isFreeRoam={isFreeRoam} onSecretUnlock={handleSecretUnlock} />
             </Scroll>
 
-            <Carousel onCardClick={setExpandedCard} expandedCard={expandedCard} />
+            <Carousel onCardClick={handleCardClick} expandedCard={expandedCard} />
+
+            {secretMode && (
+              <SecretLevel onMessageOpen={() => handleCardClick({
+                title: 'TRIBUTE',
+                desc: 'by Me',
+                color: '#000000',
+                glowColor: '#ff0000'
+              })} />
+            )}
 
             {isFreeRoam ? (
-              <FlyControls
-                movementSpeed={turbo ? 30 : 10}
-                rollSpeed={0.5}
-                dragToLook={true}
-              />
+              <>
+                <FlyControls
+                  movementSpeed={turbo ? 30 : 10}
+                  rollSpeed={0.5}
+                  dragToLook={true}
+                />
+                <SectorWarning />
+              </>
             ) : (
-              <CameraRig activeCard={expandedCard} />
+              <CameraRig activeCard={expandedCard} transitionPhase={transitionPhase} secretMode={secretMode} />
             )}
           </ScrollControls>
 
           {expandedCard && !isFreeRoam && (
             <ExpandedCard
               data={expandedCard}
-              onClose={() => setExpandedCard(null)}
+              onClose={handleClose}
+              phase={transitionPhase}
+              position={secretMode ? [0, -48.5, 9] : [0, 1.5, 9]}
             />
           )}
 
-          <Effects turbo={turbo} />
+          <ScreenTransition phase={transitionPhase} />
+
+
+          <Effects turbo={turbo} quality={dpr > 1 ? 'high' : 'low'} />
         </Suspense>
       </Canvas>
     </>

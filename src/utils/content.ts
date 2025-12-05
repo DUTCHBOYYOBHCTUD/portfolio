@@ -147,5 +147,19 @@ linkedin.com/in/ChrisKuriakose
 
 [GITHUB]
 github.com/DUTCHBOYYOBHCTUD
+`,
+    TRIBUTE: `
+"To everyone I’ve crossed paths with — mentors, teammates, friends, and the accidental heroes who appeared at just the right time — thank you for being part of my story.
+
+Whether you taught me something profound, challenged me, inspired me, or simply made the journey a little more fun, you’ve helped shape the person behind this portfolio.
+
+I’m cheering for all of you as you chase your next big milestone.
+May your projects compile on the first try, your ideas find the right audience, and your journey ahead be full of plot twists you’ll actually enjoy.
+
+Here’s to growth, good energy, and crossing paths again — preferably with even better stories next time.
+
+With gratitude and a wink,
+Chris Kuriakose
+Au revoir...."
 `
 };

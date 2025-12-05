@@ -1,13 +1,12 @@
 import { useFrame, useThree } from '@react-three/fiber'
-import { useScroll, OrbitControls } from '@react-three/drei'
+import { useScroll } from '@react-three/drei'
 import * as THREE from 'three'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
-export function CameraRig({ activeCard }: { activeCard?: any }) {
+export function CameraRig({ activeCard, transitionPhase, secretMode }: { activeCard?: any; transitionPhase?: string; secretMode?: boolean }) {
     const { camera } = useThree()
     const scroll = useScroll()
     const [isFocused, setIsFocused] = useState(false)
-    const controlsRef = useRef<any>(null)
 
     // Reset focus when activeCard changes
     useEffect(() => {
@@ -17,18 +16,24 @@ export function CameraRig({ activeCard }: { activeCard?: any }) {
     }, [activeCard])
 
     useFrame((_state, delta) => {
-        // If a card is expanded
+        // If a card is expanded (PRIORITY OVER SECRET MODE)
         if (activeCard) {
-            // If we are already focused, let OrbitControls handle it
-            if (isFocused) return
+            // If we are already focused, KEEP LOCKING (Remove early return)
+            // if (isFocused) return
 
-            // Target position: In front of the expanded card (which is at 0, 1.5, 9)
-            // Camera should be slightly back and up
-            const targetPos = new THREE.Vector3(0, 1.5, 17)
-            const targetLookAt = new THREE.Vector3(0, 1.5, 9)
+            // Target position: In front of the expanded card
+            // If secretMode, we are deep down at -50.
+            const baseY = secretMode ? -48.5 : 1.5
+            const baseLookAtY = secretMode ? -50 : 1.5
+
+            const targetPos = new THREE.Vector3(0, baseY, 17)
+            const targetLookAt = new THREE.Vector3(0, baseLookAtY, 9)
+
+            // Dynamic Speed
+            const speed = transitionPhase === 'entering' || transitionPhase === 'exiting' ? 5 : 3
 
             // Lerp camera
-            camera.position.lerp(targetPos, delta * 3)
+            camera.position.lerp(targetPos, delta * speed)
 
             // Smooth lookAt is tricky with lerp, but we can lerp the quaternion or just lookAt
             // For simplicity, we keep looking at target
@@ -38,6 +43,18 @@ export function CameraRig({ activeCard }: { activeCard?: any }) {
             if (camera.position.distanceTo(targetPos) < 0.1) {
                 setIsFocused(true)
             }
+            // CONTINUOUSLY LOCK CAMERA (No OrbitControls)
+            return
+        }
+
+        // Secret Drop Mode
+        if (secretMode) {
+            const targetPos = new THREE.Vector3(0, -50, 6)
+            const targetLookAt = new THREE.Vector3(0, -50, 0)
+
+            // Fast drop
+            camera.position.lerp(targetPos, delta * 5)
+            camera.lookAt(targetLookAt)
             return
         }
 
@@ -45,10 +62,10 @@ export function CameraRig({ activeCard }: { activeCard?: any }) {
         const offset = scroll.offset // 0 to 1
 
         // 360 Degree Orbit Logic
-        // Radius = 12
+        // Radius = 15 (Increased from 12)
         // Angle = offset * 2 * PI (Full circle)
 
-        const radius = 12
+        const radius = 15
         const angle = offset * Math.PI * 2
 
         // Calculate position on circle
@@ -70,20 +87,10 @@ export function CameraRig({ activeCard }: { activeCard?: any }) {
         camera.lookAt(targetLookAt)
     })
 
-    // If focused, return OrbitControls to "let it be free"
+    // OrbitControls removed to strictly lock camera view
     if (isFocused && activeCard) {
-        return (
-            <OrbitControls
-                ref={controlsRef}
-                target={[0, 1.5, 9]} // Look at the card
-                enableZoom={false}
-                enablePan={true}
-                enableRotate={true}
-                minDistance={8}
-                maxDistance={8}
-                makeDefault // Important to take over control
-            />
-        )
+        // Do nothing, let the useFrame loop keep the camera locked
+        return null
     }
 
     return null
