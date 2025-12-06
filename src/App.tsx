@@ -22,6 +22,7 @@ import { SecretLevel } from './components/SecretLevel'
 
 
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 function App() {
   const [expandedCard, setExpandedCard] = useState<any>(null)
@@ -76,6 +77,7 @@ function App() {
   return (
     <>
       <Analytics />
+      <SpeedInsights />
       {/* UI Overlay */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-10">
         <div className="absolute top-4 right-4 pointer-events-auto">
