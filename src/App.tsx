@@ -27,11 +27,11 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 function App() {
   const [expandedCard, setExpandedCard] = useState<any>(null)
   const [transitionPhase, setTransitionPhase] = useState<'idle' | 'entering' | 'active' | 'exiting'>('idle')
-  const [secretMode, setSecretMode] = useState(false)
+  const [secretMode, setSecretMode] = useState<string | null>(null)
   const [dpr, setDpr] = useState(1.5)
 
-  const handleSecretUnlock = () => {
-    setSecretMode(true)
+  const handleSecretUnlock = (mode: string = 'tribute') => {
+    setSecretMode(mode)
   }
 
   const handleCardClick = (data: any) => {
@@ -48,9 +48,9 @@ function App() {
       setExpandedCard(null)
       setTransitionPhase('idle')
 
-      // If we are closing the secret card, return to surface
-      if (expandedCard?.title === 'TRIBUTE') {
-        setSecretMode(false)
+      // If we are closing a secret card, return to surface
+      if (expandedCard?.title === 'TRIBUTE' || expandedCard?.title === 'TO ARDRA') {
+        setSecretMode(null)
       }
     }, 800)
   }
@@ -169,12 +169,15 @@ function App() {
             <Carousel onCardClick={handleCardClick} expandedCard={expandedCard} />
 
             {secretMode && (
-              <SecretLevel onMessageOpen={() => handleCardClick({
-                title: 'TRIBUTE',
-                desc: 'by Me',
-                color: '#000000',
-                glowColor: '#ff0000'
-              })} />
+              <SecretLevel
+                mode={secretMode}
+                onMessageOpen={() => handleCardClick({
+                  title: secretMode === 'ardra' ? 'TO ARDRA' : 'TRIBUTE',
+                  desc: secretMode === 'ardra' ? 'A Message' : 'by Me',
+                  color: '#000000',
+                  glowColor: secretMode === 'ardra' ? '#ff0066' : '#ff0000'
+                })}
+              />
             )}
 
             {isFreeRoam ? (
@@ -187,7 +190,7 @@ function App() {
                 <SectorWarning />
               </>
             ) : (
-              <CameraRig activeCard={expandedCard} transitionPhase={transitionPhase} secretMode={secretMode} />
+              <CameraRig activeCard={expandedCard} transitionPhase={transitionPhase} secretMode={!!secretMode} />
             )}
           </ScrollControls>
 
@@ -196,7 +199,7 @@ function App() {
               data={expandedCard}
               onClose={handleClose}
               phase={transitionPhase}
-              position={secretMode ? [0, -48.5, 9] : [0, 1.5, 9]}
+              position={!!secretMode ? [0, -48.5, 9] : [0, 1.5, 9]}
             />
           )}
 

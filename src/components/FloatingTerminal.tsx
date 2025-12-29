@@ -49,7 +49,7 @@ const COMMANDS: Record<string, string> = {
     "cat secrets.txt": "I have no voice, yet I speak to all. I am the ghost in the machine. What am I?",
 }
 
-export function FloatingTerminal({ position, isFreeRoam, onSecretUnlock }: { position: [number, number, number]; isFreeRoam: boolean; onSecretUnlock?: () => void }) {
+export function FloatingTerminal({ position, isFreeRoam, onSecretUnlock }: { position: [number, number, number]; isFreeRoam: boolean; onSecretUnlock?: (mode: string) => void }) {
     const [lines, setLines] = useState<string[]>([])
     const [bioText, setBioText] = useState('')
     const [phase, setPhase] = useState<'boot' | 'bio' | 'cat' | 'interactive'>('boot')
@@ -132,7 +132,14 @@ export function FloatingTerminal({ position, isFreeRoam, onSecretUnlock }: { pos
                 if (cmd === 'code') {
                     setHistory(prev => [...prev, `root@kali:~$ ${input}`, "ACCESS GRANTED. INITIATING DROP SEQUENCE..."])
                     setInput('')
-                    setTimeout(() => onSecretUnlock?.(), 1000)
+                    setTimeout(() => onSecretUnlock?.('tribute'), 1000)
+                    return
+                }
+
+                if (cmd === 'our-old-age') {
+                    setHistory(prev => [...prev, `root@kali:~$ ${input}`, "so you found it...impressive"])
+                    setInput('')
+                    setTimeout(() => onSecretUnlock?.('ardra'), 6000) // 6 seconds delay
                     return
                 }
 

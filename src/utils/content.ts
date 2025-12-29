@@ -161,5 +161,24 @@ Here’s to growth, good energy, and crossing paths again — preferably with ev
 With gratitude and a wink,
 Chris Kuriakose
 Au revoir...."
+`,
+    "TO ARDRA": `
+Hey Kutta
+Dont know if you will see this but im making this anyways...cause probably no one will see this
+i have made a lot of bad decisions...A LOT
+but none as big as leaving you kutta....
+it fucking broke me.....to the point that idk who i am anymore..
+honestly kutta.....i miss kissing you,,cuddling...fuckk
+I MISS BEING INSIDE YOU DA.....
+I never stopped loving you...and never will...all my life
+you will be my greatest achivement and treasure
+So..this is to you babe...
+I miss you....more than you will ever know....
+i may not be a good boyfriend.....but i did love you..cause you made me realise that da...that i could love someone
+to the biggest change,support in my life
+live free daa.....love you always
+P.S-why the hell am i even making this idk but i miss herrrrr
+P.S.S-i wanna be inside her so badd
+P.S.S.S-top 5 things i am never gonna get again (*'*)
 `
 };

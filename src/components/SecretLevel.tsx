@@ -1,7 +1,9 @@
 import { Float } from '@react-three/drei'
 import { SectionCard } from './SectionCard'
 
-export function SecretLevel({ onMessageOpen }: { onMessageOpen: () => void }) {
+export function SecretLevel({ onMessageOpen, mode }: { onMessageOpen: () => void; mode: string }) {
+    const isArdra = mode === 'ardra';
+
     return (
         <group position={[0, -52, 0]}>
             {/* Spotlight for dramatic effect */}
@@ -10,7 +12,7 @@ export function SecretLevel({ onMessageOpen }: { onMessageOpen: () => void }) {
                 angle={0.5}
                 penumbra={1}
                 intensity={2}
-                color="#00ff00"
+                color={isArdra ? "#ff0066" : "#00ff00"}
                 castShadow
             />
 
@@ -19,10 +21,10 @@ export function SecretLevel({ onMessageOpen }: { onMessageOpen: () => void }) {
                 <group onClick={(e) => { e.stopPropagation(); onMessageOpen() }}>
                     <SectionCard
                         position={[0, 0, 0]}
-                        title="TRIBUTE"
-                        description="by Me"
+                        title={isArdra ? "TO ARDRA" : "TRIBUTE"}
+                        description={isArdra ? "A Message" : "by Me"}
                         color="#000000"
-                        glowColor="#ff0000"
+                        glowColor={isArdra ? "#ff0066" : "#ff0000"}
                         iconType={"code" as any}
                         onClick={() => onMessageOpen()}
                     />
