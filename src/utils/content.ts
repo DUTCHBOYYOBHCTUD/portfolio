@@ -46,14 +46,21 @@ export const content: Record<string, string> = {
     EXPERIENCE: `
 > ACCESSING PERSONNEL RECORDS...
 
-[1] Cybersecurity Intern
+[1] SOC Intern
+    CrossCipher Pvt Ltd
+    Thrissur, Kerala | Jan 2026 - Present
+    - Currently working as a Security Operations Center (SOC) Intern at CrossCipher, actively involved in threat triage, alert analysis, and incident handling.
+    - Gaining hands-on experience with the Stellar Cyber platform for investigating security alerts, log correlation, and prioritization of incidents.
+    - Assisting in identifying, classifying, and escalating potential threats while applying SIEM/XDR-based security monitoring and response practices.
+
+[2] Cybersecurity Intern
     ICFOSS (International Centre for Free and Open Source Software)
     Thiruvananthapuram, Kerala | Mar 2025 - Jun 2025
     - Performed advanced vulnerability assessments on mobile, web and Database applications, focusing on session fixation, access control flaws, and insecure API logic.
     - Conducted black-box and gray-box testing using OWASP ZAP, Burp Suite, MobSF, Jadx, Quark Engine, TruffleHog and various other Security Tools.
     - Documented and presented technical findings to developers and security teams during review cycles.
 
-[2] Founder & Lead Mentor- Cybersecurity Club
+[3] Founder & Lead Mentor- Cybersecurity Club
     Toc H Institute of Science and Technology
     Ernakulam, Kerala | Jan 2025 - Present
     - Founded and scaled the college's first student-run cybersecurity community, fostering a practical learning environment.
@@ -61,21 +68,35 @@ export const content: Record<string, string> = {
     - Organized and hosted Various workshops, red team–blue team events, and internal security tool showcases.
     - Built a peer network that enabled students to contribute to open-source security tools and GitHub repos.
 
-[3] Operations Lead
+[4] Security Researcher
+    TryHackMe,HackTheBox
+    Ernakulam, Kerala | Jan 2023 - Present
+    - Actively performing hands-on labs and real-world attack simulations on TryHackMe and Hack The Box, focusing on web exploitation, privilege escalation, and network security.
+    - Practicing vulnerability assessment, enumeration, and exploitation using industry-standard tools and methodologies aligned with real SOC and penetration testing workflows.
+    - Strengthening practical skills in Linux, web application security, and post-exploitation techniques through continuous security challenges and research.
+
+[5] Bug Bounty Hunter
+    BugCrowd
+    Ernakulam, Kerala | Jan 2024 - Present
+    - Participating in the Bugcrowd bug bounty platform, identifying and responsibly reporting security vulnerabilities in web applications and online services.
+    - Performing manual and tool-assisted testing to discover vulnerabilities such as XSS, misconfigurations, and access control issues.
+    - Applying structured reconnaissance, vulnerability validation, and responsible disclosure practices aligned with real-world offensive security standards.
+
+[6] Operations Lead
     TinkerHub Toc H
     Ernakulam, Kerala | Mar 2024 - Present
     - Led cross-functional initiatives promoting tech awareness, hands-on learning, and community projects.
     - Mentored For Various Hackathons like Tink-Her-Hack and Useless Projects and helped 60+ Students Create Their First Project.
     - Fostered collaboration between students and mentors across Kerala's tech ecosystem.
 
-[4] Technical Coordinator
+[7] Technical Coordinator
     IEEE SB CS Toc H
     Ernakulam, Kerala | Mar 2023 - Apr 2024
     - Coordinated technical tracks and competitions for flagship IEEE events like ROBOCON'24, etc.
     - Oversaw logistics and evaluation for ideathons, code sprints, and cybersecurity workshops.
     - Facilitated collaboration with external speakers and alumni working in security roles.
 
-[5] Hackathon Contributor
+[8] Hackathon Contributor
     National & State-Level Hackathons
     Ernakulam, Kerala | Mar 2022 - Present
     - Participated in and mentored teams during various hackathons such as SIH, Reboot Kerala Hack, and Devfolio events.
@@ -128,7 +149,12 @@ export const content: Record<string, string> = {
 
 [CERTIFICATIONS]
 - Google Cloud Cybersecurity Certificate
-- TryHackMe Junior Tester Certificate
+- TryHackMe Junior Penetration Tester Certificate
+- Stellar Cyber Essentials Associate Certificate (SCESSA)
+- Stellar Cyber Essentials SOC Analyst Associate Certificate (SCSOCA)
+- Stellar Cyber Essentials Admin Associate Certificate (SCADMA)
+- Certified Social Engineering Defense Practitioner (CSEDP)
+- Certified Blue Team Practitioner (CBTP)
 `,
     CONTACT: `
 > ESTABLISHING SECURE CONNECTION...
